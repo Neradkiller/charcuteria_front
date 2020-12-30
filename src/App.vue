@@ -14,47 +14,55 @@
           transition="scale-transition"
           width="40"
         />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+        <h3 class="text-h6 font-weight-regular">
+          La Charcutería
+        </h3>
       </div>
-
       <v-spacer></v-spacer>
-
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
+        v-if="!estaLogeado"
         text
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+        <span class="mr-2">Registrarse</span>
+        <v-icon>mdi-account-plus</v-icon>
+      </v-btn>
+      <v-btn
+        v-if="!estaLogeado"
+        text
+      >
+        <span class="mr-2">Iniciar Sesión</span>
+        <v-icon>mdi-login-variant</v-icon>
+      </v-btn>
+      <v-btn
+        v-if="estaLogeado"
+        text
+      >
+        <span class="mr-2">Cerrar Sesión</span>
+        <v-icon>mdi-exit-run</v-icon>
       </v-btn>
     </v-app-bar>
-
     <v-main>
-      <HelloWorld/>
+      <Dashboard tipoUsuario="C" />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+// @ is an alias to /src
+import Dashboard from '@/components/Dashboard.vue'
 
 export default {
   name: 'App',
-
   components: {
-    HelloWorld,
+    Dashboard
   },
-
   data: () => ({
     //
   }),
+  computed: {
+    estaLogeado() {
+      return this.$store.state.token.length !== 0;
+    }
+  }
 };
 </script>
